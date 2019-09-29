@@ -5,7 +5,8 @@ deploy_redis_ubuntu() {
   docker create --name redis --network host redis
 
   expand etc/systemd/system/redis.service.hbs /etc/systemd/system/redis.service
-  systemctl enable --now redis
+  update-rc.d redis defaults
+  service redis start
 }
 
 deploy redis

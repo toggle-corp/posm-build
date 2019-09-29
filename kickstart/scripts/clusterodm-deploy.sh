@@ -6,7 +6,8 @@ deploy_clusterodm_ubuntu() {
   expand etc/systemd/system/clusterodm.service.hbs /etc/systemd/system/clusterodm.service
   echo '[{"hostname":"localhost","port":"3001"}]' > /etc/clusterodm.json
 
-  systemctl enable --now clusterodm
+  update-rc.d clusterodm defaults
+  service clusterodm start
 }
 
 deploy clusterodm

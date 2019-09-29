@@ -24,8 +24,10 @@ deploy_webodm_ubuntu() {
   expand etc/webodm/app/static/app/js/classes/Basemaps.js /opt/webodm/app/static/app/js/classes/Basemaps.js
   expand etc/webodm/plugins/osm-quickedit/public/main.js /opt/webodm/plugins/osm-quickedit/public/main.js
 
-  systemctl enable --now webodm-web
-  systemctl enable --now webodm-worker
+  update-rc.d webodm-web defaults
+  service webodm-web start
+  update-rc.d webodm-worker defaults
+  service webodm-worker start
 
   # wait for Docker containers to come online
   echo Waiting for WebODM to become available...

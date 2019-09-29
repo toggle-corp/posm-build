@@ -52,11 +52,13 @@ deploy_posm_admin() {
   # start
   if [ -f /etc/systemd/system/posm-admin.service ]; then
     expand etc/systemd/system/posm-admin.service.hbs /etc/systemd/system/posm-admin.service
-    systemctl daemon-reload
-    systemctl restart posm-admin
+    # systemctl daemon-reload
+    update-rc.d posm-admin defaults
+    service posm-admin restart
   else
     expand etc/systemd/system/posm-admin.service.hbs /etc/systemd/system/posm-admin.service
-    systemctl enable --now posm-admin
+    update-rc.d posm-admin defaults
+    service posm-admin start
   fi
 }
 

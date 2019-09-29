@@ -39,7 +39,8 @@ EOF
 
   # start
   expand etc/systemd/system/omk-server.service.hbs /etc/systemd/system/omk-server.service
-  systemctl enable --now omk-server
+  update-rc.d omk-server defaults
+  service omk-server start
 
   apps=$(jq .apps /opt/posm-www/config.json)
   new_apps=$(cat << EOF | jq -s '.[0] + .[1] | unique'

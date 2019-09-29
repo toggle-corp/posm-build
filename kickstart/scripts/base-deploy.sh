@@ -47,7 +47,7 @@ deploy_base_ubuntu() {
 MulticastDNS=yes
 EOF
 
-  systemctl restart systemd-resolved
+  service systemd-resolved restart
 
   curl -L https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 -o /usr/local/bin/jq
   chmod +x /usr/local/bin/jq
@@ -60,7 +60,7 @@ EOF
 
   expand etc/systemd/system/regenerate_ssh_host_keys.service /etc/systemd/system/regenerate_ssh_host_keys.service
 
-  systemctl enable regenerate_ssh_host_keys.service
+  update-rc.d regenerate_ssh_host_keys.service defaults
 }
 
 deploy base

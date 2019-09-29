@@ -5,7 +5,8 @@ deploy_nodeodm_ubuntu() {
 
   expand etc/systemd/system/nodeodm.service.hbs /etc/systemd/system/nodeodm.service
 
-  systemctl enable --now nodeodm
+  update-rc.d nodeodm defaults
+  service nodeodm start
 }
 
 deploy nodeodm

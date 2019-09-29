@@ -9,7 +9,7 @@ deploy_hotspot_ubuntu() {
     expand etc/hosts "/etc/hosts"
 
     expand etc/systemd/system/posm-hotspot.service /etc/systemd/system/posm-hotspot.service
-    systemctl enable posm-hotspot
+    update-rc.d posm-hotspot defaults
 
     if [ -z "$posm_lan_netif" ]; then
       expand etc/systemd/network/lan.network.hbs /etc/systemd/network/lan.network
@@ -28,7 +28,7 @@ deploy_hotspot_ubuntu() {
     # we're managing networks fully ourselves
     echo "network: {config: disabled}" > /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
 
-    systemctl restart systemd-networkd
+    service systemd-networkd restart
 
     # configure hostapd / dnsmasq if appropriate
     if [ -d /etc/hostapd ]; then
@@ -39,9 +39,10 @@ deploy_hotspot_ubuntu() {
 
       grep -qe "^DAEMON_CONF" /etc/default/hostapd || echo DAEMON_CONF=\"/etc/hostapd/hostapd.conf\" >> /etc/default/hostapd
 
-      systemctl unmask hostapd.service
-      systemctl enable --now hostapd.service
-      systemctl restart dnsmasq.service
+      service hostapd.service unmask
+      update-rc.d hostapd.service defaults
+      service hostapd.service start
+      service dnsmasq.service restart
     fi
 
     # reconfigure samba if installed
@@ -54,7 +55,7 @@ deploy_hotspot_ubuntu() {
     # configure the VM's WAN interface
     expand etc/systemd/network/wan.network.hbs /etc/systemd/network/10-wan.network
 
-    systemctl restart systemd-networkd
+    service systemd-networkd restart
   fi
 }
 

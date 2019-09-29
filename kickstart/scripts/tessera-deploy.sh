@@ -22,13 +22,15 @@ deploy_tessera_ubuntu() {
   mkdir -p /etc/tessera.conf.d
 
   expand etc/systemd/system/tessera.service.hbs /etc/systemd/system/tessera.service
-  systemctl enable --now tessera
+  update-rc.d tessera defaults
+  service tessera start
 
   expand etc/systemd/system/imagery-updater.service /etc/systemd/system/imagery-updater.service
   expand etc/systemd/system/imagery-updater.timer /etc/systemd/system/imagery-updater.timer
-  systemctl enable --now imagery-updater.timer
+  update-rc.d imagery-updater.timer defaults
+  service imagery-updater.timer start
   # run the service to kick things off
-  systemctl start imagery-updater.service
+  service imagery-updater.service start
 }
 
 deploy tessera

@@ -10,7 +10,7 @@ deploy_blink1_ubuntu() {
   rm $TMPFILE
 
   expand etc/systemd/system/blink1.service /etc/systemd/system/blink1.service
-  systemctl enable blink1
+  update-rc.d blink1 defaults
 }
 
 deploy blink1

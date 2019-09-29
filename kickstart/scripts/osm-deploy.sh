@@ -22,9 +22,10 @@ configure_osm_replication() {
 
   expand etc/systemd/system/osmosis-replication.service /etc/systemd/system/osmosis-replication.service
   expand etc/systemd/system/osmosis-replication.timer /etc/systemd/system/osmosis-replication.timer
-  systemctl enable --now osmosis-replication.timer
+  update-rc.d osmosis-replication.timer defaults
+  service osmosis-replication.timer start
   # run the service to kick things off
-  systemctl start osmosis-replication.service
+  service osmosis-replication.service start
 }
 
 # requires nodejs, postgis
@@ -140,7 +141,8 @@ deploy_osm_rails() {
 
   # update the systemd unit and restart
   expand etc/systemd/system/osm-web.service.hbs /etc/systemd/system/osm-web.service
-  systemctl enable --now osm-web
+  update-rc.d osm-web defaults
+  service osm-web start
 
   # create backup directory
   mkdir -p /opt/data/backups/osm
@@ -193,7 +195,8 @@ deploy_osm_cgimap() {
   su - osm -c "cd '$dst/osm-cgimap' && make -j $(nproc)"
 
   expand etc/systemd/system/osm-cgimap.service.hbs /etc/systemd/system/osm-cgimap.service
-  systemctl enable --now osm-cgimap
+  update-rc.d osm-cgimap defaults
+  service osm-cgimap start
 
   true
 }

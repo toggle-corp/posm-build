@@ -2,6 +2,6 @@
 
 if [[ "$IFACE" == "{{posm_wan_netif}}" && "$OperationalState" != "routable" ]]; then
   rm -f /run/systemd/network/09-wan-static.network
-  systemctl restart systemd-networkd
-  systemctl restart wan-timeout.timer
+  service systemd-networkd restart
+  service wan-timeout.timer restart
 fi

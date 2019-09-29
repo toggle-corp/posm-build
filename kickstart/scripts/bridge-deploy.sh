@@ -7,7 +7,7 @@ deploy_bridge_ubuntu() {
     expand etc/sysctl.d/99-forwarding.conf /etc/sysctl.d/99-forwarding.conf
 
     # reload sysctl settings
-    systemctl restart systemd-sysctl
+    service systemd-sysctl restart
 
     # configure interface hook scripts
     expand etc/networkd-dispatcher/routable.d/enable-port-forwarding.hbs /etc/networkd-dispatcher/routable.d/enable-port-forwarding

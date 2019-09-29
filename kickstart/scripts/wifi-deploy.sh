@@ -11,9 +11,9 @@ deploy_wifi_ubuntu() {
     rng-tools \
     wireless-tools
 
-  systemctl stop systemd-resolved
-  systemctl restart dnsmasq
-  systemctl start systemd-resolved
+  service systemd-resolved stop
+  service dnsmasq restart
+  service systemd-resolved start
 }
 
 deploy wifi

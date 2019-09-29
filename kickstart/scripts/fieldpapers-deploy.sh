@@ -57,11 +57,13 @@ deploy_fieldpapers_common() {
 
   if [ -f /etc/systemd/system/fp-watch.service ]; then
     expand etc/systemd/system/fp-watch.service.hbs /etc/systemd/system/fp-watch.service
-    systemctl daemon-reload
-    systemctl restart fp-watch
+    # systemctl daemon-reload
+    update-rc.d fp-watch defaults
+    service fp-watch restart
   else
     expand etc/systemd/system/fp-watch.service.hbs /etc/systemd/system/fp-watch.service
-    systemctl enable --now fp-watch
+    update-rc.d fp-watch defaults
+    service fp-watch start
   fi
 
   apps=$(jq .apps /opt/posm-www/config.json)
@@ -136,11 +138,13 @@ deploy_fp_web() {
   # start
   if [ -f /etc/systemd/system/fp-web.service ]; then
     expand etc/systemd/system/fp-web.service.hbs /etc/systemd/system/fp-web.service
-    systemctl daemon-reload
-    systemctl restart fp-web
+    # systemctl daemon-reload
+    update-rc.d fp-web defaults
+    service fp-web restart
   else
     expand etc/systemd/system/fp-web.service.hbs /etc/systemd/system/fp-web.service
-    systemctl enable --now fp-web
+    update-rc.d fp-web defaults
+    service fp-web start
   fi
 
   true
@@ -156,11 +160,13 @@ deploy_fp_tiler() {
   # start
   if [ -f /etc/systemd/system/fp-tiler.service ]; then
     expand etc/systemd/system/fp-tiler.service.hbs /etc/systemd/system/fp-tiler.service
-    systemctl daemon-reload
-    systemctl restart fp-tiler
+    # systemctl daemon-reload
+    update-rc.d fp-tiler defaults
+    service fp-tiler restart
   else
     expand etc/systemd/system/fp-tiler.service.hbs /etc/systemd/system/fp-tiler.service
-    systemctl enable --now fp-tiler
+    update-rc.d fp-tiler defaults
+    service fp-tiler start
   fi
 
   true
@@ -176,11 +182,13 @@ deploy_fp_tasks() {
   # start
   if [ -f /etc/systemd/system/fp-tasks.service ]; then
     expand etc/systemd/system/fp-tasks.service.hbs /etc/systemd/system/fp-tasks.service
-    systemctl daemon-reload
-    systemctl restart fp-tasks
+    # systemctl daemon-reload
+    update-rc.d fp-tasks defaults
+    service fp-tasks restart
   else
     expand etc/systemd/system/fp-tasks.service.hbs /etc/systemd/system/fp-tasks.service
-    systemctl enable --now fp-tasks
+    update-rc.d fp-tasks defaults
+    service fp-tasks start
   fi
 
   true
