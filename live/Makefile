@@ -154,12 +154,12 @@ posm-auth: base
 	lxc snapshot $$(cat container) $@
 	touch $@
 
-odk-central: base
+odk-central: base posm-auth
 	lxc exec $$(cat container) -- /root/posm-build/kickstart/scripts/bootstrap.sh $@
 	lxc snapshot $$(cat container) $@
 	touch $@
 
-replay-tool: base
+replay-tool: base posm-auth
 	lxc exec $$(cat container) -- /root/posm-build/kickstart/scripts/bootstrap.sh $@
 	lxc snapshot $$(cat container) $@
 	touch $@

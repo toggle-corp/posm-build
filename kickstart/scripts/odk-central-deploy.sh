@@ -26,7 +26,7 @@ deploy_odk_central_ubuntu() {
     chown www-data:www-data "$build_path" -R
 
     # Create containers for odk-central and initial user with admin access
-    docker-compose up service -d
+    docker-compose up -d service
     docker-compose exec service bash -c "
         npm install -g wait-port && wait-port 8383 && odk-cmd --email $odk_central_user user-create --password $odk_central_password"
     docker-compose exec service odk-cmd --email $odk_central_user user-promote
@@ -39,7 +39,7 @@ deploy_odk_central_ubuntu() {
     # Copy and enable nginx configuration
     expand etc/nginx-odk-central.conf /etc/nginx/sites-available/odk-central
     ln -s -f ../sites-available/odk-central /etc/nginx/sites-enabled/
-    service nginx restart
+    # service nginx restart
 }
 
 deploy odk_central
