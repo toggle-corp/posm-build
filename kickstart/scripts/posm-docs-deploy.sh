@@ -2,7 +2,7 @@
 
 docs_dir=/opt/docs
 
-deploy_docs_ubuntu() {
+deploy_posm_docs_ubuntu() {
     mkdir -p $docs_dir
     # install pip
     apt install pip
@@ -25,4 +25,4 @@ deploy_docs_ubuntu() {
     # No need to enable services it's just serving static files
 }
 
-deploy docs
+deploy posm_docs
