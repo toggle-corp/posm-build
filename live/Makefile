@@ -263,4 +263,4 @@ posm-aux.iso: posm-aux.tgz bionic-live-server-amd64.iso
 clean:
 	test -f container && lxc delete $$(cat container) --force || true
 	sudo rm -rf cdrom
-	rm -rf admin base blink1 carto container docker fieldpapers gis imagery influxdb nginx nodejs omk opendronemap osm posm postgis redis ruby samba telegraf tessera tl wifi odm-worker clusterodm nodeodm webodm posm.tgz posm.iso posm-aux posm-aux.tgz posm-aux.iso superposm superposm.tgz superposm.iso
+	rm -rf admin base blink1 carto container docker fieldpapers gis imagery influxdb nginx nodejs omk opendronemap osm posm postgis redis ruby samba telegraf tessera posm-auth replay-tool odk-central posm-docs tl wifi odm-worker clusterodm nodeodm webodm posm.tgz posm.iso posm-aux posm-aux.tgz posm-aux.iso superposm superposm.tgz superposm.iso

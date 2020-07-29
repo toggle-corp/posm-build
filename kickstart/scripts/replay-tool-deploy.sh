@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 dst=/opt/replay-tool
 server_path=$dst/posm-replay-server
@@ -32,7 +33,6 @@ deploy_server() {
 }
 
 deploy_client() {
-    client_path=`pwd`/testing
     vendor_path=$client_path/src/vendor
 
     echo Creating/Clearing directories...
@@ -44,7 +44,6 @@ deploy_client() {
 
     # Clone client
     echo Cloning posm-replay-client...
-    ls $client_path
     git clone https://github.com/posm/posm-replay-client $client_path
     # Clone other dependencies
     echo Cloning other depencies...
@@ -57,7 +56,12 @@ deploy_client() {
     cp $client_path/env_sample $client_path/.env
 
     echo Building client...
-    cd $client_path && docker run --rm -it -v $(pwd):/code node:8.16.0-alpine sh -c 'apk add git && cd code && yarn install && yarn build'
+    # Install yarn
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+    apt update && apt install yarn
+
+    cd $client_path && yarn install && yarn build
 
     chown www-data:www-data "$client_path" -R
 }
@@ -68,4 +72,4 @@ deploy_replay_tool_ubuntu() {
     deploy_server
 }
 
-deploy_replay_tool_ubuntu
+deploy replay_tool
