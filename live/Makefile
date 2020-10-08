@@ -249,7 +249,7 @@ posm-aux.tgz: posm-aux cdrom
 	sudo chown $$(whoami):$$(whoami) $@
 
 bionic-live-server-amd64.iso:
-	curl -sfL http://cdimage.ubuntu.com/ubuntu-server/bionic/daily-live/current/bionic-live-server-amd64.iso -o $@
+	curl -sfL https://cdimage.ubuntu.com/releases/18.04.4/release/ubuntu-18.04.5-server-amd64.iso -o $@
 
 posm.iso: posm.tgz bionic-live-server-amd64.iso
 	ROOTFS=$$(readlink -f $<) make -C subiquity $@
