@@ -10,7 +10,7 @@ deploy_docker_ubuntu() {
     python-setuptools \
     python-wheel
 
-  pip install docker-compose
+  pip install docker-compose==1.24
 }
 
 deploy docker
